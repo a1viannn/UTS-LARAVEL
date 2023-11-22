@@ -20,10 +20,6 @@ Route::get('/', function () {
     return view('halamanutama');
 });
 
-Route::get('/dashboard', [BerandaController::class,'index'])->name('dashboard');
-Route::get('/belanja', [BerandaController::class,'belanja'])->name('belanja');
-Route::get('/showbunga/{id}', [BungaController::class, 'show'])->name('bungashow');
-
 // register
 route::get('/registrasi',[LoginController::class,'registrasi'])->name('registrasi');
 route::post('/simpanregistrasi',[LoginController::class,'simpanregistrasi'])->name('simpanregistrasi');
@@ -33,8 +29,12 @@ Route::get('/login', [LoginController::class,'halamanlogin'])->name('login');
 Route::post('/postlogin', [LoginController::class,'postlogin'])->name('postlogin');
 route::get('/logout',[LoginController::class,'logout'])->name('logout');
 
+Route::get('/belanja', [BerandaController::class,'belanja'])->name('belanja');
+Route::get('/showbunga/{id}', [BungaController::class, 'show'])->name('bungashow');
+
 
 Route::group(['middleware' => ['auth','ceklevel:admin']], function () {
+    Route::get('/dashboard', [BerandaController::class,'index'])->name('dashboard');
     Route::get('/databunga', [BungaController::class,'index'])->name('databunga');
     Route::get('/createbunga', [BungaController::class,'create'])->name('createbunga');
     Route::post('/simpanbunga', [BungaController::class,'store'])->name('simpanbunga');
@@ -42,3 +42,5 @@ Route::group(['middleware' => ['auth','ceklevel:admin']], function () {
     Route::post('/updatebunga/{id}', [BungaController::class,'update'])->name('updatebunga');
     Route::delete('/deletebunga/{id}', [BungaController::class,'destroy'])->name('deletebunga');
 });
+
+
